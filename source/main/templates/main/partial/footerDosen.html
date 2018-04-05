@@ -1,0 +1,209 @@
+{%block content%}
+	{%load staticfiles%}
+		<script>
+            var resizefunc = [];
+        </script>
+
+        <!-- jQuery  -->
+        <script src="{%static 'coba/assets/js/jquery.min.js' %}"></script>
+        <script src="{%static 'coba/assets/js/bootstrap.min.js' %}"></script>
+        <script src="{%static 'coba/assets/js/detect.js' %}"></script>
+        <script src="{%static 'coba/assets/js/fastclick.js' %}"></script>
+
+        <script src="{%static 'coba/assets/js/jquery.slimscroll.js' %}"></script>
+        <script src="{%static 'coba/assets/js/jquery.blockUI.js' %}"></script>
+        <script src="{%static 'coba/assets/js/waves.js' %}"></script>
+        <script src="{%static 'coba/assets/js/wow.min.js' %}"></script>
+        <script src="{%static 'coba/assets/js/jquery.nicescroll.js' %}"></script>
+        <script src="{%static 'coba/assets/js/jquery.scrollTo.min.js' %}"></script>
+
+        <script src="{%static 'coba/assets/plugins/peity/jquery.peity.min.js' %}"></script>
+
+        <!-- jQuery  -->
+        <script src="{%static 'coba/assets/plugins/waypoints/lib/jquery.waypoints.js' %}"></script>
+        <script src="{%static 'coba/assets/plugins/counterup/jquery.counterup.min.js' %}"></script>
+
+
+
+        <script src="{%static 'coba/assets/plugins/morris/morris.min.js' %}"></script>
+        <script src="{%static 'coba/assets/plugins/raphael/raphael-min.js' %}"></script>
+
+        <script src="{%static 'coba/assets/plugins/jquery-knob/jquery.knob.js' %}"></script>
+
+        <script src="{%static 'coba/assets/pages/jquery.dashboard.js' %}"></script>
+
+        <script src="{%static 'coba/assets/js/jquery.core.js' %}"></script>
+        <script src="{%static 'coba/assets/js/jquery.app.js' %}"></script>
+
+        <script type="text/javascript">
+            jQuery(document).ready(function($) {
+                $('.counter').counterUp({
+                    delay: 100,
+                    time: 1200
+                });
+
+                $(".knob").knob();
+
+            });
+        </script>
+
+        <!-- Timer -->
+        <script>
+			function startTime() {
+		        var today = new Date();
+		        var monthNames = [
+					"Januari", "Februari", "Maret",
+					"April", "Mei", "Juni", "Juli",
+	    			"Agustus", "September", "Oktober",
+	    			"November", "Desember"
+	  			];
+	  			var dayNames = new Array(7);
+	  			dayNames[0] = "Minggu";
+	  			dayNames[1] = "Senin";
+	  			dayNames[2] = "Selasa";
+	  			dayNames[3] = "Rabu";
+	  			dayNames[4] = "Kamis";
+	  			dayNames[5] = "Jum'at";
+	  			dayNames[6] = "Sabtu";
+
+	  			var day = today.getDay();
+				var days = today.getDate();
+				var monthIndex = today.getMonth();
+				var year = today.getFullYear();
+		        
+		        var h = today.getHours();
+		        var m = today.getMinutes();
+		        var s = today.getSeconds();
+		        m = checkTime(m);
+		        s = checkTime(s);
+		        if (h==0 || h==1 || h==2 || h==3 || h==4 || h==5 || h==6 || h==7 || h==8 || h==9 ) {
+		            h = "0" + h;
+		        } else {
+		            h = h;
+		        }
+		        
+		        cek = h + ":" + m + ":" + s;
+
+		        document.getElementById('tanggal').innerHTML = dayNames[day] +", " + days + " " + monthNames[monthIndex] + " " + year;
+		        document.getElementById('waktu').innerHTML = cek;
+
+		        
+		        // if ((h == 15) && (m == 59) && (s == 59)) {
+		        //     window.location.replace("/reset_all");
+		        // };
+		        var t = setTimeout(startTime, 1000);
+		    }
+		    function checkTime(i) {
+		        if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+		        return i;
+		    }
+		</script>
+
+        <!-- Modal JS -->
+        <script>
+		    $('#exampleModal').on('show.bs.modal', function (event) {
+		          var button = $(event.relatedTarget) // Button that triggered the modal
+		          var recipient = button.data('whatever') // Extract info from data-* attributes
+		          console.log(recipient);
+		          var modal = $(this);
+		          var dataString = 'id=' + recipient;
+		            $.ajax({
+		                type: "GET",
+		                url: "/kehadiranDosen/",
+		                data: dataString,
+		                cache: false,
+		                success: function (data) {
+		                    console.log(data);
+		                    modal.find('.dash').html(data);
+		                },
+		                error: function(err) {
+		                    console.log(err);
+		                }
+		            });
+		    })
+		</script>
+
+		<!-- Status -->
+        <script id="_appendHere">
+		  	var h = "{{jam}}";
+		  	var m = "{{menit}}";
+		  	var s = "{{detik}}";
+		  	var now = "{{now}}";
+
+		  	if (h == 15 && m == 00 && s > 55 && s < 59) {
+				window.location.replace("/hapus/reset_all");
+			}
+			
+			{%for dosen in object_dosen %}
+
+		        status = "{{dosen.status}}";
+
+		        if (status == "False") {
+		           	document.getElementById('status{{dosen.id}}').innerHTML = "<span class='btn btn-danger btn-custom waves-light btn-xs'>Sibuk</span>";
+		        } else {
+
+		         	{%if object_kehadiran%}
+			         	{%for kehadiran in object_kehadiran%}
+			         		$("#divdivdiv{{kehadiran.dosen.id}}").css('background-color', 'white');
+			         		cekStatus = "{{kehadiran.dosen.status}}";
+				         
+				         	jam = "{{kehadiran.waktu_Mulai|time:'H'}}";
+				         	menit = "{{kehadiran.waktu_Mulai|time:'i'}}";
+
+				         	hadir = "{{kehadiran.jenis_kehadiran}}";
+				        	mulai = "{{kehadiran.waktu_Mulai|time:'H:i'}}";
+				         	selesai = "{{kehadiran.waktu_Selesai|time:'H:i'}}";
+			         		if (cekStatus == "False") {
+			         			document.getElementById('status{{kehadiran.dosen.id}}').innerHTML = "<span class='btn btn-danger btn-custom waves-light btn-xs'>Sibuk</span>";
+			         			document.getElementById('waktuHadir{{kehadiran.dosen.id}}').innerHTML = " ";
+
+			         		} else {
+				         		if ( (h == jam && m >= menit) || (h > jam && (m >= menit || m <= menit)) ) {
+			        				if(hadir == "senggang") {
+			        					document.getElementById('status{{kehadiran.dosen.id}}').innerHTML = "<span class='btn btn-success btn-custom waves-light btn-xs'>Senggang</span>";
+			        					document.getElementById('waktuHadir{{kehadiran.dosen.id}}').innerHTML = mulai + " - " + selesai;
+			        				} else if(hadir == "sibuk") {
+			        					document.getElementById('status{{kehadiran.dosen.id}}').innerHTML = "<span class='btn btn-danger btn-custom waves-light btn-xs'>Sibuk</span>";
+			       						document.getElementById('waktuHadir{{kehadiran.dosen.id}}').innerHTML = mulai + " - " + selesai;
+			       					} else if(hadir == "pulang") {
+			       						document.getElementById('status{{kehadiran.dosen.id}}').innerHTML = "<span class='btn btn-purple btn-custom waves-light btn-xs'>Pulang</span>";
+			       						document.getElementById('waktuHadir{{kehadiran.dosen.id}}').innerHTML = mulai + " - " + selesai;
+			       					} else {
+			       						document.getElementById('status{{kehadiran.dosen.id}}').innerHTML = "<span class='btn btn-warning btn-custom waves-light btn-xs'>Khusus TTD</span>";
+			       						document.getElementById('waktuHadir{{kehadiran.dosen.id}}').innerHTML = mulai + " - " + selesai;
+			       					}
+		        				}
+			         		}
+			         	{%endfor%}
+			        {%else%}
+		         		$("#divdivdiv{{dosen.id}}").css('background-color', '#bdc3c7');
+		         		document.getElementById('status{{dosen.id}}').innerHTML = "<span class='btn btn-inverse btn-custom waves-light btn-xs'>Tidak Hadir</span>";
+		         		document.getElementById('waktuHadir{{dosen.id}}').innerHTML = " ";
+		         	{%endif%}
+		         	
+		        }
+		            
+		    {%endfor%}
+			
+		</script>
+
+		<!-- Reload 
+		<script>
+			var waktu = 10000;
+			var append_increment = 0;
+		    setInterval(function() {
+		        $.ajax({
+		            type: "GET",
+		            url: '/dosen/',  // URL to your view that serves new info
+		            data: {'append_increment': append_increment}
+		        })
+		        .done(function(response) {
+		            $('#_appendHere').append(response);
+		            append_increment += 10;
+		        });
+		    }, waktu)
+		</script> -->
+
+    </body>
+</html>
+{%endblock%}

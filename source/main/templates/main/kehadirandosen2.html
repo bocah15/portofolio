@@ -1,0 +1,70 @@
+{%extends 'main/partial/headerDosen.html'%}
+
+{%block content%}
+{%load staticfiles%}
+
+	<table class="table">
+    	<thead>
+        	<tr>
+            	<td>No</td>
+                <td>Status</td>
+                <td>Tanggal</td>
+                <td>Waktu Mulai</td>
+                <td>Waktu Berhenti</td>
+                <td>Keterangan</td>
+			</tr>
+		</thead>
+        <tbody>
+        	{% if hadir %}
+            	{% for izin in hadir %}
+
+                    {%if izin.status == False %}
+                        <tr style="background-color:#bdc3c7">
+                            <td>{{ forloop.counter }}</td>
+                            {%if izin.jenis_kehadiran == 'senggang' %}
+                                <td>Senggang</td>
+                            {%elif izin.jenis_kehadiran == 'sibuk' %}
+                                <td>Sibuk</td>
+                            {%elif izin.jenis_kehadiran == 'pulang' %}
+                                <td>Pulang</td>
+                            {%else%}
+                                <td>Khusus TTD</td>
+                            {%endif%}
+                    {%else%}
+                        {%if izin.jenis_kehadiran == 'senggang' %}
+                            <tr class="btn-success btn-custom waves-light">
+                                <td>{{ forloop.counter }}</td>
+                                <td>Senggang</td>
+                        
+                        {%elif izin.jenis_kehadiran == 'sibuk' %}
+                            <tr class="btn-danger btn-custom waves-light">
+                                <td>{{ forloop.counter }}</td>
+                                <td>Sibuk</td>
+                        
+                        {%elif izin.jenis_kehadiran == 'pulang' %}
+                            <tr class="btn-purple btn-custom waves-light">
+                                <td>{{ forloop.counter }}</td>
+                                <td>Pulang</td>
+                        
+                        {%else%}
+                            <tr class="btn-warning btn-custom waves-light">
+                                <td>{{ forloop.counter }}</td>
+                                <td>Khusus TTD</td>
+                        {%endif%}
+                    {%endif%}
+                            <td>{{ izin.tanggal |date:'d-m-Y'}}</td>
+                            <td>{{ izin.waktu_Mulai |time:'H:i'}}</td>
+                            <td>{{ izin.waktu_Selesai |time:'H:i'}}</td>
+                            <td>{{ izin.keterangan }}</td>
+                        </tr>
+                    
+				{% endfor %}
+			{% else %}
+					<tr>
+                    	<td colspan="5">Tidak ada pengajuan kehadiran hari ini</td>
+                    </tr>
+			{% endif %}
+        </tbody>
+	</table>
+    {%include 'main/partial/footerDosen.html'%}
+{%endblock%}

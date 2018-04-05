@@ -1,0 +1,81 @@
+{%extends 'dosen/partial/header.html'%}
+
+{%block content%}
+{%load staticfiles%}
+	
+	<section id="container" >
+
+      <!--header start-->
+      {%include "dosen/partial/topbar.html"%}
+      <!--header end-->
+      
+
+      <!--sidebar start-->
+      {%include "dosen/partial/sidebar.html"%}
+      <!--sidebar end-->
+      
+
+      <!--main content start-->
+      <section id="main-content">
+        <section class="wrapper">
+          <div class="row">
+            <div class="col-lg-9 main-chart">
+              <h1 class="text-center">Edit Profil</h1>
+              
+              <div class="row mt">
+                <!--ISI -->
+                {%if dosen_ini%}
+                  {%for dosen in dosen_ini%}
+	                	<form method="GET" action="/profil/edit/update">
+	                		
+	                    <table class="table table-striped table-advance table-hover">
+	                      <tr>
+	                        <td>Username</td>
+	                        <td>: 
+	                        	{%for user in user_ini%}
+	                        		<input type="text" name="usernameBaru" value="{{ user.username }}">
+	                          {%endfor%}
+	                        </td>
+	                      </tr>
+	                      <tr>
+	                        <td>Nama</td>
+	                        <td>: <input type="text" name="namaBaru" value="{{ dosen.nama }}"></td>
+	                      </tr>
+	                      <tr>
+	                        <td>NIP</td>
+	                        <td>: <input type="text" name="nipBaru" value="{{ dosen.nip }}"></td>
+	                      </tr>
+	                    </table>
+	                  	<button class="btn btn-primary" type="submit">Submit</button>
+	                	</form>      
+                  {%endfor%}
+                {%endif%}
+                <!--ISI end-->
+              </div><!-- /row -->	
+            </div><!-- /col-lg-9 END SECTION MIDDLE -->      
+            <div class="col-lg-3 ds">
+              <!-- CALENDAR-->
+              {%include "dosen/includes/calendar.html"%}
+              <!-- / calendar -->        
+            </div><!-- /col-lg-3 -->
+          </div><! --/row -->
+        </section>
+      </section>
+      <!--main content end-->
+
+      <!--footer start-->
+      <footer class="site-footer">
+          <div class="text-center">
+              2018 - Teknik Informatika Universitas Mataram
+          </div>
+      </footer>
+      <!--footer end-->
+      
+  </section>
+  
+
+    {%include "dosen/partial/js.html"%}
+
+	</body>
+	</html>
+{%endblock%}

@@ -1,0 +1,98 @@
+{%extends "dosen/partial/header.html"%}
+
+{%block content%}
+	{%load staticfiles%}
+	
+	<section id="container" >
+
+      <!--header start-->
+      {%include "dosen/partial/topbar.html"%}
+      <!--header end-->
+      
+
+      <!--sidebar start-->
+      {%include "dosen/partial/sidebar.html"%}
+      <!--sidebar end-->
+      
+      <!--main content start-->
+      <section id="main-content">
+        <section class="wrapper">
+          <div class="row">            
+            <div class="col-lg-9 main-chart">
+              <h1 class="text-center">Profil</h1>
+              
+              <div class="row mt">
+                <!--ISI -->
+                {%if dosen_ini%}
+                  {%for dosen in dosen_ini%}
+                    <table class="table table-striped table-advance table-hover">
+                      <tr>
+                        <td>Username</td>
+                        <td>:
+                          {%for user in user_ini%}
+                            {{ user.username }}
+                          {%endfor%}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Nama</td>
+                        <td>: {{ dosen.nama }}</td>
+                      </tr>
+                      <tr>
+                        <td>NIP</td>
+                        <td>: {{ dosen.nip }}</td>
+                      </tr>
+                      <tr>
+                        <td>Sibuk</td>
+                        <td>
+                          {%if dosen.status == False %}
+                            <label class="switch">
+                              <a href="/ganti/sibuk/">
+                                <input type="checkbox" checked>
+                                <span class="slider round"></span>
+                              </a>
+                            </label>
+                          {%else%}
+                            <label class="switch">
+                              <a href="/ganti/sibuk/">
+                                <input type="checkbox">
+                                <span class="slider round"></span>
+                              </a>
+                            </label>
+                          {%endif%}
+                        </td>
+                      </tr>
+                    </table>
+                  {%endfor%}
+                {%endif%}
+                <form method="POST" action="/profil/edit/">
+                  {% csrf_token %}
+                  <button class="btn btn-primary" type="submit">Edit</button>
+                </form>
+                <!--ISI end-->
+              </div><!-- /row -->	
+            </div><!-- /col-lg-9 END SECTION MIDDLE -->      
+            <div class="col-lg-3 ds">
+              <!-- CALENDAR-->
+              {%include "dosen/includes/calendar.html"%}
+              <!-- / calendar -->        
+            </div><!-- /col-lg-3 -->
+          </div><! --/row -->
+        </section>
+      </section>
+      <!--main content end-->
+
+      <!--footer start-->
+      <footer class="site-footer">
+          <div class="text-center">
+              2018 - Teknik Informatika Universitas Mataram
+          </div>
+      </footer>
+      <!--footer end-->
+      
+  </section>
+    {%include "dosen/partial/js.html"%}
+
+	</body>
+	</html>
+{%endblock%}

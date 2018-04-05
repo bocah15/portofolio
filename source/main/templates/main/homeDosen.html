@@ -1,0 +1,192 @@
+{%extends 'main/partial/headerDosen.html'%}
+
+{%block content%}
+	{%load staticfiles%}
+<!-- Begin page -->
+        <div id="wrapper">
+
+            <!-- Top Bar Start -->
+            <div class="topbar">
+
+                <!-- LOGO -->
+                <div class="topbar-left">
+                    <div class="text-center"> 
+                        <!-- Image Logo here -->
+                        <a href="index.html" class="logo">
+                            <i class="icon-c-logo"> <img src="{%static 'coba/assets/images/logo_sm.png' %}" height="35"/></i>
+                            <span>
+                            	<img src="{%static 'coba/assets/images/logo_sm.png' %}" height="35"/> 
+                            </span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Button mobile view to collapse sidebar menu -->
+                <div class="navbar navbar-default" role="navigation">
+                    <div class="container">
+                        <div>
+                            <div class="pull-left">
+                                <button class="button-menu-mobile open-left waves-effect waves-light">
+                                    <i class="md md-menu"></i>
+                                </button>
+                                
+                                <span class="clearfix"></span>
+                            </div>
+                            <div class="pull-left hidden-xs">
+			                    <div class="text-center"> 
+			                        <!-- Image Logo here -->
+			                        <a href="/dosen/" class="logo">
+			                            <span>PS. Teknik Informatika FT Universitas Mataram</span>
+			                        </a>
+			                    </div>
+                			</div>
+                            <div class="pull-right">
+				                <!-- Search -->
+	                            <form id="searchform" action="" method="GET" role="search" class="navbar-left app-search pull-left">
+                            	
+				                     <input id="searchbox" name="q" type="text" placeholder="Search..." class="form-control">
+				                     <a href=""><i class="fa fa-search"></i></a>
+				                </form>
+                            </div>
+                        </div>
+                        <!--/.nav-collapse -->
+                    </div>
+                </div>
+            </div>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+
+            <div class="left side-menu">
+                <div class="sidebar-inner slimscrollleft">
+                    <!--- Divider -->
+                    <div id="sidebar-menu">
+                        <ul>
+
+                            <li class="has_sub">
+                                <a href="/dosen/" class="waves-effect"><i class="ti-home"></i> <span> Dashboard </span></span></a>
+                            </li>
+
+                            <li class="has_sub">
+                                <a href="javascript:void(0);" class="waves-effect"><i class="ion-gear-a"></i><span> Setting </span></a>
+                            </li>
+
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <!-- Left Sidebar End -->
+
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+                        <div class="row">
+                        	<div class="col-xs-12 col-md-12">
+                        		<div class="pull-right">
+	                        		<h3 id="tanggal"></h3>
+	                        		<h4 class="pull-right" id="waktu"></h4>
+                        		</div>
+                        	</div>
+
+                        <!-- Page-Title -->
+                        {%for dosen in object_dosen%}
+							<div class="col-xs-12 col-md-4">
+								<div class="panel panel-default">
+									<div class="panel-body easypiechart-panel" style="background-color:#bdc3c7" id="divdivdiv{{dosen.id}}">
+										<div class="col-xs-4 col-sm-4">
+					                        <img src="{{dosen.foto.url}}" alt="{{dosen.nama}}" class="img-responsive img-circle" style="height:100px;width:100px" />
+					                    </div>
+					                    <div class="col-xs-8 col-sm-8">
+					                        <span class="name" title="{{dosen.nama}}">{{dosen.nama}}</span><br/>
+					                        <span class="ion-briefcase" data-toggle="tooltip" title="NIP"> {{dosen.nip}}</span>
+					                        <span class="visible-xs">
+					                    </div>
+					                    <div class="col-xs-8 col-sm-8">
+					                    	<a data-toggle="modal" data-target="#exampleModal" data-whatever="{{dosen.nama}}">
+					                    		<button class="btn btn-inverse btn-custom waves-light btn-xs">
+					                    			Detail
+					                    		</button>
+					                    	</a>
+					                        <span id="status{{dosen.id}}">
+					                        	<button class="btn btn-inverse btn-custom waves-light btn-xs">
+					                        		Tidak Hadir
+					                        	</button>
+					                        </span>
+					                        <span id="waktuHadir{{dosen.id}}"></span>
+					                    </div>
+									</div>
+								</div>
+							</div>
+						{%endfor%}
+							
+							
+						</div><!--/.row-->
+
+                    </div> <!-- container -->
+
+                    <div class="pagintaion text-center">
+						<span class="step-links">
+							{%if object_dosen.has_previous%}
+								<a href="?page={{ object_dosen.previous_page_number }}" class="btn btn-primary btn-custom waves-light btn-xs">Previous</a>
+							{%endif%}
+						
+							<span class="current">
+								Page {{object_dosen.number}} of {{object_dosen.paginator.num_pages}}
+							</span>
+
+							{%if object_dosen.has_next%}
+								<a href="?page={{ object_dosen.next_page_number }}" class="btn btn-primary btn-custom waves-light btn-xs">Next</a>
+							{%endif%}
+						</span>
+					</div>
+                </div> <!-- content -->
+
+                <footer class="footer text-right">
+                    © 2018. PSTI-UNRAM.
+                </footer>
+
+            </div>
+
+
+            <!-- ============================================================== -->
+            <!-- End Right content here -->
+            <!-- ============================================================== -->
+
+        </div>
+        <!-- END wrapper -->
+
+        <!-- Modal -->
+		<div class="container">
+			<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="memberModalLabel" aria-hidden="true">
+			    <div class="modal-dialog">
+			        <div class="modal-content">
+			            <div class="modal-header">
+			                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+			                <h4 class="modal-title text-center" id="memberModalLabel">Jadwal Kehadiran</h4>
+			            </div>
+			            <div class="dash">
+
+			            </div>
+			            <div>
+			            	<button class="btn btn-danger"></button> Ada - Sibuk
+			            	<button class="btn btn-success"></button> Ada - Senggang
+			            	<button class="btn btn-warning"></button> Ada - Khusus TTD
+			            	<br>
+			            	<button class="btn btn-purple"></button> Pulang
+			            	<button class="btn" style="background-color:#bdc3c7"></button> Tunggu Sebentar
+			            </div>
+			        </div>
+			    </div>
+			</div>
+		</div>
+
+
+	{%include 'main/partial/footerDosen.html'%}
+{%endblock%}

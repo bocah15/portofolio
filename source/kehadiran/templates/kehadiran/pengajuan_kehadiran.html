@@ -1,0 +1,120 @@
+{%extends "dosen/partial/header.html"%}
+
+{%block content%}
+	{%load staticfiles%}
+	
+	<section id="container" >
+
+      <!--header start-->
+      {%include "dosen/partial/topbar.html"%}
+      <!--header end-->
+      
+
+      <!--sidebar start-->
+      {%include "dosen/partial/sidebar.html"%}
+      <!--sidebar end-->
+      
+
+      <!--main content start-->
+      <section id="main-content">
+        <section class="wrapper">
+
+          <div class="row">
+            <div class="col-lg-9 main-chart">
+
+              <h1 class="text-center">Pengajuan Kehadiran</h1>
+
+              <div class="row mt">
+                <!--ISI -->
+                <form action="/pengajuan_kehadiran/" method="POST">
+                  {%csrf_token%}
+                  <div class="col-xs-12 col-md-2"> <br>
+                    Status :
+                    <br>
+                    <div class="input-group">
+                      {{form.jenis_kehadiran}}
+                    </div>
+                  </div>
+
+                  <div class="col-xs-12 col-md-3"> <br>
+                    Tanggal :
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                      </span>
+                      {{form.tanggal}}
+                      <!--
+                      <input class="form-control" id="date" name="tanggal" placeholder="YYYY-MM-DD" type="text"/>-->
+                      
+                    </div>
+                  </div>
+
+                  <div class="col-xs-12 col-md-3"> <br>
+                    Waktu Mulai :
+                    <div class="input-group bootstrap-timepicker timepicker">
+                      <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>{{form.waktu_Mulai}}
+                    </div>
+                  </div>
+
+                  <div class="col-xs-12 col-md-3"> <br>
+                    Waktu Selesai :
+                    <div class="input-group bootstrap-timepicker timepicker">
+                      <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>{{form.waktu_Selesai}}
+                    </div>
+                  </div>
+
+                  <div class="col-xs-12 col-md-12"> <br>
+                    Keterangan :
+                  </div>
+                  <div class="col-xs-12 col-md-11">
+                    {{form.keterangan}}
+                  </div>
+
+                  <div class="col-xs-6 col-md-12"><br>
+                    <input class="btn btn-primary" type="submit" value="Submit"/>  
+                  </div>
+                </form>
+                
+                <script src="{%static 'js/jquery.1.11.1.js' %}"></script>
+                <script src="{%static 'js/bootstrap-timepicker.min.js' %}"></script>                  
+                <script type="text/javascript">
+                  $('#waktuAwal').timepicker({
+                    minuteStep: 10,
+                    showMeridian: false,
+                  });
+                  $('#waktuAkhir').timepicker({
+                    minuteStep: 10,
+                    showMeridian: false,
+                  });
+                </script>
+              <!--ISI end-->
+
+              </div><!-- /row -->	
+            </div><!-- /col-lg-9 END SECTION MIDDLE -->
+            <div class="col-lg-3 ds">
+              <!-- CALENDAR-->
+              {%include "dosen/includes/calendar.html"%}
+              <!-- / calendar -->        
+            </div><!-- /col-lg-3 -->
+
+          </div><! --/row -->
+
+        </section>
+      </section>
+      <!--main content end-->
+
+      <!--footer start-->
+      <footer class="site-footer">
+          <div class="text-center">
+              2018 - Teknik Informatika Universitas Mataram
+          </div>
+      </footer>
+      <!--footer end-->
+      
+  </section>
+
+    {%include "dosen/partial/js.html"%}
+
+	</body>
+	</html>
+{%endblock%}

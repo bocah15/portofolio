@@ -1,0 +1,41 @@
+{%block content%}
+	{%load staticfiles%}
+	<aside>
+          <div id="sidebar"  class="nav-collapse ">
+              <!-- sidebar menu start-->
+              <ul class="sidebar-menu" id="nav-accordion">
+
+                  {%if dosen_ini%}
+                    {%for dosen in dosen_ini%}
+                  	  <p class="centered"><a href="profile.html"><img src="{{dosen.foto.url}}" class="img-circle" width="60"></a></p>
+                  	  <h5 class="centered">{{dosen.nama}}</h5>
+                    {%endfor%}
+                  {%endif%}
+
+                  
+
+              	  	
+                  <li class="mt">
+                      <a class="" href="/profil/">
+                          <i class="fa fa-dashboard"></i>
+                          <span>Profil</span>
+                      </a>
+                  </li>
+
+                  <li class="sub-menu">
+                      <a href="javascript:;" >
+                          <i class="fa fa-tasks"></i>
+                          <span>Kehadiran</span>
+                      </a>
+                      <ul class="sub">
+                          <li><a  href="/daftar_kehadiran/">Daftar Kehadiran</a></li>
+                          <li><a  href="/pengajuan_kehadiran/">Pengajuan Kehadiran</a></li>
+                      </ul>
+                  </li>
+
+              </ul>
+              <!-- sidebar menu end-->
+          </div>
+      </aside>
+	}
+{%endblock%}

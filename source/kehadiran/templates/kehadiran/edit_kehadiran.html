@@ -1,0 +1,136 @@
+{%extends "dosen/partial/header.html"%}
+
+{%block content%}
+	{%load staticfiles%}
+	
+	<section id="container" >
+
+      <!--header start-->
+      {%include "dosen/partial/topbar.html"%}
+      <!--header end-->
+      
+
+      <!--sidebar start-->
+      {%include "dosen/partial/sidebar.html"%}
+      <!--sidebar end-->
+      
+
+      <!--main content start-->
+      <section id="main-content">
+        <section class="wrapper">
+
+          <div class="row">
+            <div class="col-lg-9 main-chart">
+
+              <h1>Edit Kehadiran</h1>
+
+              <div class="row mt">
+                <!--ISI -->
+                {%if edit_ini%}
+                  {%for edit in edit_ini%}
+                    <form action="/edit/editkehadiran/update/" method="GET">
+                      <div class="col-xs-12 col-md-2"> <br>
+                        Status :
+                        <br>
+                        <div class="input-group">
+                          <select class="form-control" name="jenis_kehadiran">
+                            <option value="sibuk">Sibuk</option>
+                            <option value="senggang">Senggang</option>
+                            <option value="ttd">Khusus TTD</option>
+                            <option value="pulang">Pulang</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="col-xs-12 col-md-3"> <br>
+                        Tanggal :
+                        <div class="input-group">
+                          <span class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                          </span>
+                          {# {{form.tanggal}} #}
+                          <!-- -->
+                          <input class="form-control" id="date" name="tanggal" placeholder="YYYY-MM-DD" type="text" value="{{edit.tanggal|date:'Y-m-d'}}" />
+                          
+                        </div>
+                      </div>
+
+                      <div class="col-xs-12 col-md-3"> <br>
+                        Waktu Mulai :
+                        <div class="input-group bootstrap-timepicker timepicker">
+                          <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-time"></i>
+                          </span>
+                          <input name="waktu_Mulai" class="form-control input-small" id="editWaktuAwal" type="text" value="{{edit.waktu_Mulai | time:'H:i'}}">
+                        </div>
+                      </div>
+
+                      <div class="col-xs-12 col-md-3"> <br>
+                        Waktu Selesai :
+                        <div class="input-group bootstrap-timepicker timepicker">
+                          <span class="input-group-addon" value="{{edit.waktu_Selesai | time:'H:i'}}">
+                            <i class="glyphicon glyphicon-time"></i>
+                          </span>
+                          <input name="waktu_Selesai" class="form-control input-small" id="editWaktuAkhir" type="text" value="{{edit.waktu_Selesai | time:'H:i'}}">
+                        </div>
+                      </div>
+
+                      <div class="col-xs-12 col-md-12"> <br>
+                        Keterangan :
+                      </div>
+                      <div class="col-xs-12 col-md-11">
+                        <input type="text" name="keterangan" class="form-control" value="{{edit.keterangan}}">
+                      </div>
+
+                      <div class="col-xs-6 col-md-12"><br>
+                        <button class="btn btn-primary" name="updateKehadiran" value="{{kode}}" type="submit">
+                          Submit
+                        </button>
+                      </div>
+                    </form>
+                  {%endfor%}
+                {%endif%}
+
+                <script src="{%static 'js/jquery.1.11.1.js' %}"></script>
+                <script src="{%static 'js/bootstrap-timepicker.min.js' %}"></script>
+                <script type="text/javascript">
+                  $('#editWaktuAwal').timepicker({
+                    minuteStep: 10,
+                    showMeridian: false,
+                  });
+                  $('#editWaktuAkhir').timepicker({
+                    minuteStep: 10,
+                    showMeridian: false,
+                  });
+                </script>
+              <!--ISI end-->
+
+              </div><!-- /row -->	
+            </div><!-- /col-lg-9 END SECTION MIDDLE -->
+            <div class="col-lg-3 ds">
+              <!-- CALENDAR-->
+              {%include "dosen/includes/calendar.html"%}
+              <!-- / calendar -->        
+            </div><!-- /col-lg-3 -->
+
+          </div><! --/row -->
+
+        </section>
+      </section>
+      <!--main content end-->
+
+      <!--footer start-->
+      <footer class="site-footer">
+          <div class="text-center">
+              2018 - Teknik Informatika Universitas Mataram
+          </div>
+      </footer>
+      <!--footer end-->
+      
+  </section>
+
+    {%include "dosen/partial/js.html"%}
+
+	</body>
+	</html>
+{%endblock%}

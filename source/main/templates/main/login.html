@@ -1,0 +1,48 @@
+{%extends "main/partial/headerlogin.html"%}
+{%block content%}
+	{%load staticfiles%}
+	<body>
+
+	  <div id="login-page">
+	  	<div class="container">
+	  	
+		      <form class="form-login" action="/login/" method="POST">
+		        <h2 class="form-login-heading">login dosen</h2>
+		        {% csrf_token %}
+				{% if messages %}
+                	<ul>
+                    	{% for message in messages %}
+                        	<li>{{ message }}</li>
+						{% endfor %}
+                    </ul>
+				{% endif %}
+		        <div class="login-wrap">
+		            <input type="text" class="form-control" placeholder="Username" name="username" id="username" autofocus>
+		            <br>
+		            <input type="password" class="form-control" placeholder="Password" name="password" id="password">
+		            <br>
+		            <button class="btn btn-theme btn-block" type="submit" id="login"><i class="fa fa-lock"></i> SIGN IN</button>
+
+		
+		        </div>
+		
+		      </form>	  	
+	  	
+	  	</div>
+	  </div>
+
+    <!-- js placed at the end of the document so the pages load faster -->
+    <script src="{%static 'assets/js/jquery.js' %}"></script>
+    <script src="{%static 'assets/js/bootstrap.min.js' %}"></script>
+
+    <!--BACKSTRETCH-->
+    <!-- You can use an image of whatever size. This script will stretch to fit in any screen size.-->
+    <script type="text/javascript" src="{%static 'assets/js/jquery.backstretch.min.js' %}"></script>
+    <script>
+        // $.backstretch("{%static 'assets/img/login-bg.jpg' %}", {speed: 500});
+    </script>
+
+
+  </body>
+</html>
+{%endblock%}

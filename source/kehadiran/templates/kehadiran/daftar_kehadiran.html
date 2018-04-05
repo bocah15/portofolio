@@ -1,0 +1,102 @@
+{%extends "dosen/partial/header.html"%}
+
+{%block content%}
+	{%load staticfiles%}
+	
+	<section id="container" >
+
+      <!--header start-->
+      {%include "dosen/partial/topbar.html"%}
+      <!--header end-->
+      
+
+      <!--sidebar start-->
+      {%include "dosen/partial/sidebar.html"%}
+      <!--sidebar end-->
+      
+
+      <!--main content start-->
+      <section id="main-content">
+        <section class="wrapper">
+          <div class="row">
+            <div class="col-lg-9 main-chart">
+              <h1 class="text-center">Daftar Kehadiran</h1>
+              <div class="row mt">
+                <!--ISI -->
+
+                <table class="table table-striped table-advance table-hover">
+                  <thead>
+                    <tr>
+                      <td>No</td>
+                      <td>Status</td>
+                      <td>Tanggal</td>
+                      <td>Waktu Mulai</td>
+                      <td>Waktu Selesai</td>
+                      <td>Keterangan</td>
+                      <td>Edit</td>
+                      <td>Hapus</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% if daftar_izin %}
+                      {% for izin in daftar_izin %}
+                        <tr>
+                          <td>{{ forloop.counter }}</td>
+                          <td>{{ izin.jenis_kehadiran }}</td>
+                          <td>{{ izin.tanggal |date:'d-m-Y' }}</td>
+                          <td>{{ izin.waktu_Mulai |time:'H:i'}}</td>
+                          <td>{{ izin.waktu_Selesai |time:'H:i'}}</td>
+                          <td>{{ izin.keterangan }}</td>
+                          <td>
+                            <form action="/edit/editkehadiran/" method="GET">
+                              <button class="btn btn-primary" type="submit" name="editini" value="{{izin.id}}" style="height:35px">
+                                <p class="glyphicon glyphicon-edit"></p>
+                              </button>
+                            </form>
+                          </td>
+                          <td>
+                            <form action="/hapus/deletekehadiran/" method="GET">
+                              <button class="btn btn-danger" type="submit" name="hapus" value="{{izin.id}}" style="height:35px">
+                                <p class="glyphicon glyphicon-trash"></p>
+                              </button>
+                            </form>
+                          </td>
+                        </tr>
+                      {% endfor %}
+                      {% else %}
+                        <tr>
+                          <td colspan="8">Tidak ada pengajuan kehadiran hari ini</td>
+                        </tr>
+                    {% endif %}
+                  </tbody>
+                </table>
+                      
+                      <!--ISI end-->
+              </div><!-- /row -->	
+            </div><!-- /col-lg-9 END SECTION MIDDLE -->      
+            <div class="col-lg-3 ds">
+              <!-- CALENDAR-->
+              {%include "dosen/includes/calendar.html"%}
+              <!-- / calendar -->        
+            </div><!-- /col-lg-3 -->
+
+          </div><! --/row -->
+        </section>
+      </section>
+      <!--main content end-->
+
+      <!--footer start-->
+      <footer class="site-footer">
+          <div class="text-center">
+              2018 - Teknik Informatika Universitas Mataram
+          </div>
+      </footer>
+      <!--footer end-->
+      
+  </section>
+
+    {%include "dosen/partial/js.html"%}
+
+	</body>
+	</html>
+{%endblock%}
